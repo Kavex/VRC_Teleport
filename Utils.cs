@@ -8,6 +8,10 @@ namespace TP
 {
     class Utils
     {
+
+        public static Transform playlistButton =>
+        GameObject.Find("UserInterface/MenuContent/Screens/UserInfo/Buttons/RightSideButtons/RightUpperButtonColumn/PlaylistsButton").transform;
+
         public static Transform CreateDefaultButton(string text, Vector3 textPosition, string tooltip, Color textColor, Transform parent, Action listener)
         {
             Transform quickMenu = GameObject.Find("UserInterface/Canvas_QuickMenu(Clone)").transform;
@@ -28,6 +32,18 @@ namespace TP
             buttonTransform.gameObject.SetActive(true);
 
             return buttonTransform;
+        }
+
+        public static Button CreateUserInfoButton(string buttonText, System.Action buttonAction)
+        {
+            Button button = GameObject.Instantiate(playlistButton, playlistButton.parent, true).GetComponent<Button>();
+            Text btnText = button.GetComponentInChildren<Text>();
+
+            btnText.text = buttonText;
+            button.onClick = new Button.ButtonClickedEvent();
+            button.onClick.AddListener(buttonAction);
+
+            return button;
         }
         public static Transform screens { get => GameObject.Find("UserInterface/MenuContent/Screens/").transform; }
         public static PageWorldInfo pageWorldInfo { get => screens.Find("WorldInfo").GetComponent<PageWorldInfo>(); }

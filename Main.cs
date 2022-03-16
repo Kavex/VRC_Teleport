@@ -11,8 +11,6 @@ namespace TP
     {
         GameObject quickMenu;
         GameObject quickInterfaceMenu;
-        public static Transform playlistButton =>
-        GameObject.Find("UserInterface/MenuContent/Screens/UserInfo/Buttons/RightSideButtons/RightUpperButtonColumn/PlaylistsButton").transform;
 
         public override void OnApplicationStart()
         {
@@ -27,17 +25,6 @@ namespace TP
                 yield return null;
             SelMenu();
         }
-        public static Button CreateUserInfoButton(string buttonText, System.Action buttonAction)
-        {
-            Button button = GameObject.Instantiate(playlistButton, playlistButton.parent, true).GetComponent<Button>();
-            Text btnText = button.GetComponentInChildren<Text>();
-
-            btnText.text = buttonText;
-            button.onClick = new Button.ButtonClickedEvent();
-            button.onClick.AddListener(buttonAction);
-
-            return button;
-        }
 
         private void SelMenu()
         {
@@ -48,7 +35,7 @@ namespace TP
                     Utils.LocalPlayer.gameObject.transform.position = Utils.MenuControl.activePlayer.gameObject.transform.position;
                 }));
 
-            Button tpButton = CreateUserInfoButton("Teleport", () =>
+            Button tpButton = Utils.CreateUserInfoButton("Teleport", () =>
             {
                 Utils.LocalPlayer.gameObject.transform.position = Utils.MenuControl.activePlayer.gameObject.transform.position;
             });
